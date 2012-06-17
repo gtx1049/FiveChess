@@ -7,6 +7,7 @@ class NetPlayer : public Player
 {
 public:
     NetPlayer(int);
+    ~NetPlayer();
     Chess doAct(ChessPos, ChessBoard*);
     bool doWait();
 };

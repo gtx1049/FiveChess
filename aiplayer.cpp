@@ -1,8 +1,13 @@
 #include "aiplayer.h"
 #include "struct.h"
+#include "aianalyze.h"
 
 AIplayer::AIplayer(int type) :
     Player(type)
+{
+}
+
+AIplayer::~AIplayer()
 {
 }
 
@@ -18,7 +23,10 @@ bool AIplayer::doWait()
     return false;
 }
 
-ChessPos AIplayer::thinkStrategy()
+ChessPos AIplayer::thinkStrategy(ChessBoard* chessmat)
 {
-    return ChessPos(1, 1);
+    AIanalyze currentstate(chessmat, chesstype, 0);
+
+    return currentstate.analyzeCurrent();
+
 }

@@ -5,6 +5,10 @@ LocalPlayer::LocalPlayer(int type) :
 {
 }
 
+LocalPlayer::~LocalPlayer()
+{
+}
+
 Chess LocalPlayer::doAct(ChessPos cp, ChessBoard* chessmat)
 {
     Chess lastchess = Chess(cp.row, cp.column, this->getChesstype());

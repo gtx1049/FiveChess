@@ -23,12 +23,15 @@ private:
     std::vector<Chess> steps;
 public:
     ChessBoard();
+    ~ChessBoard();
     void reFresh();
     void setOneChess(Chess);
     bool backStep();
     bool judgeVictory(Chess&);
     void waitAct();
     void displayBoard(Board* b);
+    int getChessBoardMat(int, int);
+    bool hasChess(int, int);
 
 private:
     bool fiveInDirection(int, int, int, int);

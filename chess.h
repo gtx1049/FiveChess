@@ -15,6 +15,7 @@ private:
 public:
     Chess();
     Chess(int type, int X, int Y);
+    ~Chess();
     void removeChess();
 
     int getRow();

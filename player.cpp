@@ -11,6 +11,10 @@ Player::Player(int type)
     chesstype = type;
 }
 
+Player::~Player()
+{
+}
+
 void Player::setActive(bool in)
 {
     isactive = in;

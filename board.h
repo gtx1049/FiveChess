@@ -21,6 +21,7 @@ class Board : public QWidget
     Q_OBJECT
 public:
     explicit Board(QWidget *parent = 0);
+    ~Board();
 
     void setStyleSheet(const QString &styleSheet);
     void setObjectName(const QString &name);

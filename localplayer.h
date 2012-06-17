@@ -7,7 +7,7 @@ class LocalPlayer : public Player
 {
 public:
     LocalPlayer(int);
-
+    ~LocalPlayer();
     Chess doAct(ChessPos, ChessBoard*);
     bool doWait();
 

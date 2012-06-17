@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "qmessagebox.h"
+#include "aianalyze.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -32,6 +33,7 @@ void MainWindow::on_singleButton_clicked()
 {
     ui->menu->hide();
     ui->playScreen->setGameMode(LOCAL_SINGLE);
+    AIanalyze::level = 1;
     ui->playScreen->show();
 }
 
@@ -81,8 +83,3 @@ void MainWindow::on_netButton_clicked()
     ui->menu->hide();
 }
 
-
-void MainWindow::on_playScreen_clicked()
-{
-    QMessageBox::about(this, "xxx", "xxx");
-}

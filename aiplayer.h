@@ -7,9 +7,10 @@ class AIplayer : public Player
 {
 public:
     AIplayer(int);
+    ~AIplayer();
     Chess doAct(ChessPos, ChessBoard*);
     bool doWait();
-    ChessPos thinkStrategy();
+    ChessPos thinkStrategy(ChessBoard*);
 };
 
 #endif // AIPLAYER_H

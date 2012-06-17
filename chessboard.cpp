@@ -5,6 +5,10 @@ ChessBoard::ChessBoard()
 {
 }
 
+ChessBoard::~ChessBoard()
+{
+}
+
 //刷新整个棋盘
 void ChessBoard::reFresh()
 {
@@ -88,7 +92,8 @@ void ChessBoard::waitAct()
 //根据棋盘对窗口进行绘制
 void ChessBoard::displayBoard(Board *board)
 {
-    QPainter painter(board);
+    QPainter painter;
+    painter.begin(board);
     for(int i = 0; i < BOARD_SIZE; i++)
     {
         for(int j = 0; j < BOARD_SIZE; j++)
@@ -105,6 +110,21 @@ void ChessBoard::displayBoard(Board *board)
             }
         }
     }
+    painter.end();
+}
+
+int ChessBoard::getChessBoardMat(int row, int column)
+{
+    return chessboardmat[row][column];
+}
+
+bool ChessBoard::hasChess(int row, int column)
+{
+    if(chessboardmat[row][column] != EMPTY_CHESS)
+    {
+        return true;
+    }
+    return false;
 }
 
 //通过方向判断五子连珠的函数
@@ -153,6 +173,16 @@ bool ChessBoard::fiveInDirection(int row, int column, int type, int direction)
                 continue;
             }
         }
+
+        else
+        {
+            //在下方向时标志边缘为死
+            if(nowcolumn == BOARD_SIZE || nowrow == BOARD_SIZE)
+            {
+                return false;
+            }
+        }
+
         if(chessboardmat[nowrow][nowcolumn] == type)
         {
             chesscount++;

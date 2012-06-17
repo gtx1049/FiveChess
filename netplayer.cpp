@@ -5,6 +5,10 @@ NetPlayer::NetPlayer(int type) :
 {
 }
 
+NetPlayer::~NetPlayer()
+{
+}
+
 Chess NetPlayer::doAct(ChessPos cp, ChessBoard* chessmat)
 {
     Chess lastchess = Chess(cp.row, cp.column, this->getChesstype());

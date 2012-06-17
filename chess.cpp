@@ -11,6 +11,10 @@ Chess::Chess(int X, int Y, int type)
     chessY = Y;
 }
 
+Chess::~Chess()
+{
+}
+
 void Chess::removeChess()
 {
     delete this;

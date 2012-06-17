@@ -36,10 +36,6 @@ private slots:
 
     void on_netButton_clicked();
 
-    void on_playScreen_click();
-
-    void on_playScreen_clicked();
-
 private:
     Ui::MainWindow *ui;
 };

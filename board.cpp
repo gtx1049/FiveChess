@@ -12,6 +12,19 @@ Board::Board(QWidget *parent) :
     gamemode = NONE_GAME;
 }
 
+Board::~Board()
+{
+    if(player != NULL)
+    {
+        delete player;
+    }
+    if(playerAI != NULL)
+    {
+        delete playerAI;
+    }
+    delete maincb;
+}
+
 //当外部调用这些函数，使之能够跳到基类的函数运行
 void Board::setStyleSheet(const QString &styleSheet)
 {
@@ -48,6 +61,10 @@ void Board::mousePressEvent(QMouseEvent *mpe)
     int row = x / BOARD_GRID_SIZE;
     int column = y / BOARD_GRID_SIZE;
 
+    if(maincb->hasChess(row, column))
+    {
+        return;
+    }
     //最后一次落子
     Chess lastchess = player->doAct(ChessPos(row, column), maincb);
 
@@ -57,7 +74,7 @@ void Board::mousePressEvent(QMouseEvent *mpe)
     switch(gamemode)
     {
         case LOCAL_SINGLE:
-            playerAI->doAct(playerAI->thinkStrategy(), maincb);
+            playerAI->doAct(playerAI->thinkStrategy(maincb), maincb);
             repaint();
             break;
         case LOCAL_MUTI:

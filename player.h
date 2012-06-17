@@ -11,6 +11,7 @@ class Player
 public:
     Player();
     Player(int);
+    virtual ~Player();
     virtual Chess doAct(ChessPos, ChessBoard*) = 0;
     virtual bool doWait() = 0;
 
@@ -18,7 +19,7 @@ public:
     bool getActive();
     void setChesstype(int);
     int getChesstype();
-private:
+protected:
     bool isactive;
     int chesstype;
 };

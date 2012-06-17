@@ -8,7 +8,7 @@
 const int BOARD_SIZE = 15;
 
 const int BLACK_CHESS = 1;
-const int WHITE_CHESS = 2;
+const int WHITE_CHESS = -1;
 const int EMPTY_CHESS = 0;
 
 const bool VICTORY = true;
