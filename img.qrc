@@ -1,0 +1,40 @@
+<RCC>
+    <qresource prefix="/fiveChess/png">
+        <file>img/acceptButton.png</file>
+        <file>img/acceptButton_h.png</file>
+        <file>img/backButton.png</file>
+        <file>img/backButton_h.png</file>
+        <file>img/backStepButton.png</file>
+        <file>img/backStepButton_h.png</file>
+        <file>img/blackChess.png</file>
+        <file>img/confirmButton.png</file>
+        <file>img/confirmButton_h.png</file>
+        <file>img/doubleButton.png</file>
+        <file>img/doubleButton_h.png</file>
+        <file>img/drawButton.png</file>
+        <file>img/drawButton_h.png</file>
+        <file>img/exitButton.png</file>
+        <file>img/exitButton_h.png</file>
+        <file>img/failButton.png</file>
+        <file>img/failButton_h.png</file>
+        <file>img/helpButton.png</file>
+        <file>img/helpButton_h.png</file>
+        <file>img/highlightChose.png</file>
+        <file>img/hostChoose.png</file>
+        <file>img/invitateButton.png</file>
+        <file>img/invitateButton_h.png</file>
+        <file>img/invitationNotice.png</file>
+        <file>img/mainmenu.png</file>
+        <file>img/nameInputbox.png</file>
+        <file>img/netButton.png</file>
+        <file>img/netButton_h.png</file>
+        <file>img/playscreen.png</file>
+        <file>img/refuseButton.png</file>
+        <file>img/refuseButton_h.png</file>
+        <file>img/singleButton.png</file>
+        <file>img/singleButton_h.png</file>
+        <file>img/startButton.png</file>
+        <file>img/startButton_h.png</file>
+        <file>img/whiteChess.png</file>
+    </qresource>
+</RCC>

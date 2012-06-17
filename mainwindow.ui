@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>960</width>
+    <height>640</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="menu" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>960</width>
+      <height>640</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:url(:/fiveChess/png/img/mainmenu.png);</string>
+    </property>
+    <widget class="QPushButton" name="singleButton">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>400</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#singleButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/singleButton.png);
+}
+QPushButton#singleButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/singleButton_h.png);
+}
+</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="netButton">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>400</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#netButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/netButton.png);
+}
+QPushButton#netButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/netButton_h.png);
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="helpButton">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>440</y>
+       <width>91</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#helpButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/helpButton.png);
+}
+QPushButton#helpButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/helpButton_h.png);
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="exitButton">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>440</y>
+       <width>71</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#exitButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/exitButton.png);
+}
+QPushButton#exitButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/exitButton_h.png);
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="doubleButton">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>400</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#doubleButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/doubleButton.png);
+}
+QPushButton#doubleButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/doubleButton_h.png);
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <zorder>singleButton</zorder>
+    <zorder>netButton</zorder>
+    <zorder>helpButton</zorder>
+    <zorder>exitButton</zorder>
+    <zorder>doubleButton</zorder>
+    <zorder>playScreen</zorder>
+   </widget>
+   <widget class="QWidget" name="hostChose" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>960</width>
+      <height>640</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:url(:/fiveChess/png/img/hostChoose.png);</string>
+    </property>
+    <widget class="QWidget" name="inputName" native="true">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>120</y>
+       <width>551</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+background:transparent;</string>
+     </property>
+     <widget class="QWidget" name="inputbox" native="true">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>70</y>
+        <width>381</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+background:url(:/fiveChess/png/img/nameInputbox.png); </string>
+      </property>
+      <widget class="QTextEdit" name="nameInput">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>30</y>
+         <width>288</width>
+         <height>40</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:transparent;
+font-size:20px;</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="confirmButton">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>250</y>
+        <width>131</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton#confirmButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/confirmButton.png);
+}
+QPushButton#confirmButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/confirmButton_h.png);
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="backButton">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>250</y>
+        <width>131</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton#backButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/backButton.png);
+}
+QPushButton#backButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/backButton_h.png);
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="hostlist" native="true">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>120</y>
+       <width>551</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background:transparent;</string>
+     </property>
+     <widget class="QPushButton" name="inviteButton">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>250</y>
+        <width>131</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton#inviteButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/invitateButton.png);
+}
+QPushButton#inviteButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/invitateButton_h.png);
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="backButton2">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>250</y>
+        <width>131</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton#backButton2{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/backButton.png);
+}
+QPushButton#backButton2:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/backButton_h.png);
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="invitation" native="true">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>120</y>
+       <width>551</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background:transparent;</string>
+     </property>
+     <widget class="QPushButton" name="acceptButton">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>250</y>
+        <width>131</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton#acceptButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/acceptButton.png);
+}
+QPushButton#acceptButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/acceptButton_h.png);
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="refuseButton">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>250</y>
+        <width>131</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton#refuseButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/refuseButton.png);
+}
+QPushButton#refuseButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/refuseButton_h.png);
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="status" native="true">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>170</y>
+       <width>451</width>
+       <height>251</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background:transparent;</string>
+     </property>
+    </widget>
+    <zorder>status</zorder>
+    <zorder>invitation</zorder>
+    <zorder>hostlist</zorder>
+    <zorder>inputName</zorder>
+   </widget>
+   <widget class="Board" name="playScreen" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>960</width>
+      <height>640</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/fiveChess/png/img/playscreen.png);</string>
+    </property>
+    <widget class="QPushButton" name="startButton">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>500</y>
+       <width>81</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#startButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/startButton.png);
+}
+QPushButton#startButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/startButton_h.png);
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="backStepButton">
+     <property name="geometry">
+      <rect>
+       <x>660</x>
+       <y>500</y>
+       <width>81</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#backStepButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/backStepButton.png);
+}
+QPushButton#backStepButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/backStepButton_h.png)
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="drawButton">
+     <property name="geometry">
+      <rect>
+       <x>750</x>
+       <y>500</y>
+       <width>81</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#drawButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/drawButton.png);
+}
+QPushButton#drawButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/drawButton_h.png);
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="failButton">
+     <property name="geometry">
+      <rect>
+       <x>840</x>
+       <y>500</y>
+       <width>81</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#failButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/failButton.png);
+}
+QPushButton#failButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/failButton_h.png);
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="help" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>960</width>
+      <height>640</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:url(:/fiveChess/png/img/hostChoose.png);</string>
+    </property>
+    <widget class="QPushButton" name="helpBackButton">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>410</y>
+       <width>131</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#helpBackButton{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/backButton.png);
+}
+QPushButton#helpBackButton:hover{
+background:transparent no-repeat;
+background-image:url(:/fiveChess/png/img/backButton_h.png);
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </widget>
+   <zorder>help</zorder>
+   <zorder>hostChose</zorder>
+   <zorder>menu</zorder>
+   <zorder>playScreen</zorder>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>960</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>Board</class>
+   <extends>QWidget</extends>
+   <header location="global">board.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
