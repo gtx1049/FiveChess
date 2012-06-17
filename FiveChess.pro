@@ -14,13 +14,22 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     chessboard.cpp \
     chess.cpp \
-    board.cpp
+    board.cpp \
+    player.cpp \
+    localplayer.cpp \
+    netplayer.cpp \
+    aiplayer.cpp
 
 HEADERS  += mainwindow.h \
     chessboard.h \
     const.h \
     chess.h \
-    board.h
+    board.h \
+    player.h \
+    localplayer.h \
+    netplayer.h \
+    aiplayer.h \
+    struct.h
 
 FORMS    += mainwindow.ui
 

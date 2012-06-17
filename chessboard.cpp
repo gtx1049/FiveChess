@@ -88,6 +88,7 @@ void ChessBoard::waitAct()
 //根据棋盘对窗口进行绘制
 void ChessBoard::displayBoard(Board *board)
 {
+    QPainter painter(board);
     for(int i = 0; i < BOARD_SIZE; i++)
     {
         for(int j = 0; j < BOARD_SIZE; j++)
@@ -95,7 +96,11 @@ void ChessBoard::displayBoard(Board *board)
             if(chessboardmat[i][j] == BLACK_CHESS)
             {
                 QImage img("img/blackChess.png");
-                QPainter painter(board);
+                painter.drawImage(i * BOARD_GRID_SIZE + BOARD_OFFSET_X, j * BOARD_GRID_SIZE + BOARD_OFFSET_Y, img);
+            }
+            else if(chessboardmat[i][j] == WHITE_CHESS)
+            {
+                QImage img("img/whiteChess.png");
                 painter.drawImage(i * BOARD_GRID_SIZE + BOARD_OFFSET_X, j * BOARD_GRID_SIZE + BOARD_OFFSET_Y, img);
             }
         }
