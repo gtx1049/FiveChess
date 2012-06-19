@@ -6,6 +6,7 @@
 #include "chessboard.h"
 #include "const.h"
 #include "player.h"
+#include "aithread.h"
 
 /*
     由QWiget继承下来点棋盘，负责接受棋盘事件
@@ -13,7 +14,7 @@
 
 //声明ChessBoard
 class ChessBoard;
-class AIplayer;
+class AIthread;
 class Player;
 
 class Board : public QWidget
@@ -31,19 +32,20 @@ public:
     void paintEvent(QPaintEvent *);
 
     void setGameMode(int);
+    void setUserfirst(bool);
     void releasePlayer();
 private:
     ChessBoard* maincb;
     QWidget* parentwidget;
     Player* player;
-    AIplayer* playerAI;
+    AIthread* playerAI;
 private:
     int gamemode;
 
 signals:
     
 public slots:
-    
+    void repaintScreen();
 };
 
 #endif // BOARD_H

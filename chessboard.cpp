@@ -1,4 +1,5 @@
 #include "chessboard.h"
+#include "board.h"
 
 //构造函数
 ChessBoard::ChessBoard()

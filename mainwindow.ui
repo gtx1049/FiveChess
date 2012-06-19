@@ -150,7 +150,6 @@ background-image:url(:/fiveChess/png/img/doubleButton_h.png);
     <zorder>helpButton</zorder>
     <zorder>exitButton</zorder>
     <zorder>doubleButton</zorder>
-    <zorder>playScreen</zorder>
    </widget>
    <widget class="QWidget" name="hostChose" native="true">
     <property name="geometry">
@@ -535,7 +534,6 @@ background-image:url(:/fiveChess/png/img/backButton_h.png);
    <zorder>help</zorder>
    <zorder>hostChose</zorder>
    <zorder>menu</zorder>
-   <zorder>playScreen</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

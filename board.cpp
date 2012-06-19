@@ -2,6 +2,7 @@
 #include "aiplayer.h"
 #include "netplayer.h"
 #include "localplayer.h"
+#include "aithread.h"
 
 Board::Board(QWidget *parent) :
     QWidget(parent)
@@ -65,6 +66,15 @@ void Board::mousePressEvent(QMouseEvent *mpe)
     {
         return;
     }
+
+    if(gamemode == LOCAL_SINGLE)
+    {
+        if(playerAI->getAIplayer()->getActive())
+        {
+            QMessageBox::about(NULL, "xx", "Thinking!");
+            return;
+        }
+    }
     //最后一次落子
     Chess lastchess = player->doAct(ChessPos(row, column), maincb);
 
@@ -74,8 +84,7 @@ void Board::mousePressEvent(QMouseEvent *mpe)
     switch(gamemode)
     {
         case LOCAL_SINGLE:
-            playerAI->doAct(playerAI->thinkStrategy(maincb), maincb);
-            repaint();
+            playerAI->start();
             break;
         case LOCAL_MUTI:
             break;
@@ -102,11 +111,22 @@ void Board::setGameMode(int target)
     if(target == LOCAL_SINGLE)
     {
         player = new LocalPlayer(BLACK_CHESS);
-        playerAI = new AIplayer(WHITE_CHESS);
+        playerAI = new AIthread(new AIplayer(WHITE_CHESS), maincb, this);
+
     }
-    else if(target == LOCAL_MUTI)
+    else if(target == NET_MUTI)
     {
         player = new NetPlayer(WHITE_CHESS);
+    }
+}
+
+void Board::setUserfirst(bool userfirst)
+{
+    if(!userfirst)
+    {
+        player->setChesstype(WHITE_CHESS);
+        playerAI->getAIplayer()->setChesstype(BLACK_CHESS);
+        maincb->setOneChess(Chess(7, 7, BLACK_CHESS));
     }
 }
 
@@ -118,6 +138,11 @@ void Board::releasePlayer()
     {
         delete playerAI;
     }
+}
+
+void Board::repaintScreen()
+{
+    repaint();
 }
 
 

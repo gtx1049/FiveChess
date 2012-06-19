@@ -1,7 +1,11 @@
 #ifndef AIPLAYER_H
 #define AIPLAYER_H
 
-#include "player.h"
+#include"player.h"
+
+class Player;
+class ChessPos;
+class ChessBoard;
 
 class AIplayer : public Player
 {

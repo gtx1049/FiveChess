@@ -4,7 +4,6 @@
 #include<const.h>
 #include<vector>
 #include"chess.h"
-#include"board.h"
 
 using namespace std;
 

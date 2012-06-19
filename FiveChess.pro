@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     localplayer.cpp \
     netplayer.cpp \
     aiplayer.cpp \
-    aianalyze.cpp
+    aianalyze.cpp \
+    aithread.cpp
 
 HEADERS  += mainwindow.h \
     chessboard.h \
@@ -31,7 +32,8 @@ HEADERS  += mainwindow.h \
     netplayer.h \
     aiplayer.h \
     struct.h \
-    aianalyze.h
+    aianalyze.h \
+    aithread.h
 
 FORMS    += mainwindow.ui
 

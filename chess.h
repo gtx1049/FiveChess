@@ -14,7 +14,7 @@ private:
     int chessY;
 public:
     Chess();
-    Chess(int type, int X, int Y);
+    Chess(int, int, int);
     ~Chess();
     void removeChess();
 
