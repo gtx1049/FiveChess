@@ -11,7 +11,7 @@ AIanalyze::AIanalyze()
 //初始化分数棋盘, 最顶层
 AIanalyze::AIanalyze(ChessBoard *mat, int thetype, int thedeep)
 {
-    type = thetype;
+    cputype = thetype;
     father = NULL;
     deep = thedeep;
 
@@ -26,7 +26,13 @@ AIanalyze::AIanalyze(ChessBoard *mat, int thetype, int thedeep)
 
 AIanalyze::AIanalyze(int currentchess[BOARD_SIZE][BOARD_SIZE], int thetype, int thedeep, AIanalyze* thefather, ChessPos cp)
 {
-    type = thetype;
+    if(thedeep > AIanalyze::level)
+    {
+        deep = thedeep;
+        return;
+    }
+
+    cputype = thetype;
     father = thefather;
     deep = thedeep;
     scorecount = 0;
@@ -40,20 +46,15 @@ AIanalyze::AIanalyze(int currentchess[BOARD_SIZE][BOARD_SIZE], int thetype, int 
         }
     }
 
-    currentboard[cp.row][cp.column] = type;
-
+    currentboard[cp.row][cp.column] = cputype;
     for(int i = 0; i < BOARD_SIZE; i++)
     {
         for(int j = 0; j < BOARD_SIZE; j++)
         {
-            chessboardscore[i][j] += judgeOnePos(i, j, HORIZON);
-            std::cout << chessboardscore[i][j] << "h  ";
-            chessboardscore[i][j] += judgeOnePos(i, j, VERTICAL);
-            std::cout << chessboardscore[i][j] << "v  ";
-            chessboardscore[i][j] += judgeOnePos(i, j, LEFT);
-            std::cout << chessboardscore[i][j] << "l  ";
-            chessboardscore[i][j] += judgeOnePos(i, j, RIGHT);
-            std::cout << chessboardscore[i][j] << "r  " << endl;
+            chessboardscore[i][j] += judgeOnePos(i, j, HORIZON, cputype);
+            chessboardscore[i][j] += judgeOnePos(i, j, VERTICAL, cputype);
+            chessboardscore[i][j] += judgeOnePos(i, j, LEFT, cputype);
+            chessboardscore[i][j] += judgeOnePos(i, j, RIGHT, cputype);
             scorecount += chessboardscore[i][j];
         }
     }
@@ -68,19 +69,55 @@ int AIanalyze::getScore()
     return scorecount;
 }
 
+void AIanalyze::addScore(int score)
+{
+    scorecount += score;
+}
+
 ChessPos AIanalyze::analyzeCurrent()
 {
-    int maxcount = 0;
-    ChessPos cp;
+    if(deep > AIanalyze::level)
+    {
+        return ChessPos(-1, -1);
+    }
+
+    int maxcount = LOWEST_NUM;
+    ChessPos cp(0, 0);
 
     for(int i = 0; i < BOARD_SIZE; i++)
     {
         for(int j = 0; j < BOARD_SIZE; j++)
         {
             if(currentboard[i][j] == EMPTY_CHESS)
-            {
-                AIanalyze childanalyze(currentboard, type, deep + 1, father, ChessPos(i , j));
-                if(childanalyze.getScore() > maxcount)
+            {               
+
+                if(!judgeValue(i, j))
+                {
+                   continue;
+                }
+
+                cp.setPos(i, j);
+
+                int temptype = cputype;
+                if(deep % 2 != 0)
+                {
+                    temptype = -temptype;
+                }
+
+
+                AIanalyze childanalyze(currentboard, temptype, deep + 1, this, ChessPos(i , j));
+
+                childanalyze.analyzeCurrent();
+
+                if(deep != 0)
+                {
+                    if(deep % 2 == 0)
+                    {
+                        father->addScore(-this->getScore());
+                    }
+                }
+
+                if(deep == 0 && childanalyze.getScore() > maxcount)
                 {
                     maxcount = childanalyze.getScore();
                     cp.setPos(i, j);
@@ -88,10 +125,13 @@ ChessPos AIanalyze::analyzeCurrent()
             }
         }
     }
+
+
+
     return cp;
 }
 
-int AIanalyze::judgeOnePos(int row, int column, int direction)
+int AIanalyze::judgeOnePos(int row, int column, int direction, int type)
 {
     if(currentboard[row][column] != type)
     {
@@ -136,7 +176,7 @@ int AIanalyze::judgeOnePos(int row, int column, int direction)
         if(upflag)
         {
             //棋盘边缘，标志为死
-            if(nowcolumn < 0 || nowrow < 0)
+            if(nowcolumn < 0 || nowrow < 0 || nowrow == BOARD_SIZE || nowcolumn == BOARD_SIZE)
             {
                 isdead = true;
 
@@ -196,7 +236,7 @@ int AIanalyze::judgeOnePos(int row, int column, int direction)
             case 4:
             return 8;
             case 5:
-            return 64;
+            return 128;
         }
     }
     else
@@ -210,10 +250,71 @@ int AIanalyze::judgeOnePos(int row, int column, int direction)
             case 3:
             return 16;
             case 4:
-            return 32;
+            return 128;
             case 5:
-            return 64;
+            return 128;
         }
     }
     return 0;
+}
+
+bool AIanalyze::judgeValue(int row, int column)
+{
+    if(row + 1 != BOARD_SIZE)
+    {
+        if(currentboard[row + 1][column] != EMPTY_CHESS)
+        {
+            return true;
+        }
+    }
+    if(row - 1 >= 0)
+    {
+        if(currentboard[row - 1][column] != EMPTY_CHESS)
+        {
+            return true;
+        }
+    }
+    if(column + 1 != BOARD_SIZE)
+    {
+        if(currentboard[row][column + 1] != EMPTY_CHESS)
+        {
+            return true;
+        }
+    }
+    if(column - 1 >= 0)
+    {
+        if(currentboard[row][column - 1] != EMPTY_CHESS)
+        {
+            return true;
+        }
+    }
+    if(column + 1 != BOARD_SIZE && row + 1 != BOARD_SIZE)
+    {
+        if(currentboard[row + 1][column + 1] != EMPTY_CHESS)
+        {
+            return true;
+        }
+    }
+    if(column - 1 >= 0 && row - 1 >= 0)
+    {
+        if(currentboard[row - 1][column - 1] != EMPTY_CHESS)
+        {
+            return true;
+        }
+    }
+    if(column - 1 >= 0 && row + 1 != BOARD_SIZE)
+    {
+        if(currentboard[row + 1][column - 1] != EMPTY_CHESS)
+        {
+            return true;
+        }
+    }
+    if(column + 1 != BOARD_SIZE && row - 1 >= 0)
+    {
+        if(currentboard[row - 1][column + 1] != EMPTY_CHESS)
+        {
+            return true;
+        }
+    }
+    return false;
 }

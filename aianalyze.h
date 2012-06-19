@@ -13,9 +13,11 @@ public:
     AIanalyze(int[BOARD_SIZE][BOARD_SIZE], int, int, AIanalyze*, ChessPos);
     ~AIanalyze();
     int getScore();
+    void addScore(int);
     ChessPos analyzeCurrent();
 private:
-    int judgeOnePos(int row, int column, int direction);
+    int judgeOnePos(int row, int column, int direction, int type);
+    bool judgeValue(int row, int colum);
 private:
     AIanalyze* father;
     int chessboardscore[BOARD_SIZE][BOARD_SIZE];
@@ -23,7 +25,7 @@ private:
     ChessPos nowchess;
     int scorecount;
     int deep;
-    int type;
+    int cputype;
 public:
     static int level;
 };

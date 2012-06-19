@@ -163,7 +163,7 @@ bool ChessBoard::fiveInDirection(int row, int column, int type, int direction)
         nowcolumn += offsetY;
         if(upflag)
         {
-            if(nowcolumn < 0 || nowrow < 0)
+            if(nowcolumn < 0 || nowrow < 0 || nowrow == BOARD_SIZE || nowcolumn == BOARD_SIZE)
             {
                 upflag = false;
                 offsetY = -offsetY;

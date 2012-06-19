@@ -33,8 +33,8 @@ void MainWindow::on_singleButton_clicked()
 {
     ui->menu->hide();
     ui->playScreen->setGameMode(LOCAL_SINGLE);
-    AIanalyze::level = 1;
-    ui->playScreen->setUserfirst(false);
+    AIanalyze::level = 2;
+    ui->playScreen->setUserfirst(true);
     ui->playScreen->show();
 }
 
