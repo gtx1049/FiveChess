@@ -14,6 +14,7 @@ AIanalyze::AIanalyze(ChessBoard *mat, int thetype, int thedeep)
     cputype = thetype;
     father = NULL;
     deep = thedeep;
+    scorecount = 0;
 
     for(int i = 0; i < BOARD_SIZE; i++)
     {
@@ -22,10 +23,32 @@ AIanalyze::AIanalyze(ChessBoard *mat, int thetype, int thedeep)
             currentboard[i][j] = mat->getChessBoardMat(i, j);
         }
     }
+
+    for(int i = 0; i < BOARD_SIZE; i++)
+    {
+        for(int j = 0; j < BOARD_SIZE; j++)
+        {
+            chessboardscore[i][j] += judgeOnePos(i, j, HORIZON, cputype);
+            chessboardscore[i][j] += judgeOnePos(i, j, VERTICAL, cputype);
+            chessboardscore[i][j] += judgeOnePos(i, j, LEFT, cputype);
+            chessboardscore[i][j] += judgeOnePos(i, j, RIGHT, cputype);
+            scorecount += chessboardscore[i][j];
+        }
+    }
+
+    if(judgeState(-cputype) < scorecount)
+    {
+        AIanalyze::level = 1;
+    }
+    else
+    {
+        AIanalyze::level = 2;
+    }
 }
 
 AIanalyze::AIanalyze(int currentchess[BOARD_SIZE][BOARD_SIZE], int thetype, int thedeep, AIanalyze* thefather, ChessPos cp)
 {
+    //同样，当层数过大时回退
     if(thedeep > AIanalyze::level)
     {
         deep = thedeep;
@@ -36,7 +59,7 @@ AIanalyze::AIanalyze(int currentchess[BOARD_SIZE][BOARD_SIZE], int thetype, int 
     father = thefather;
     deep = thedeep;
     scorecount = 0;
-
+    //初始化自己的棋盘
     for(int i = 0; i < BOARD_SIZE; i++)
     {
         for(int j = 0; j < BOARD_SIZE; j++)
@@ -46,6 +69,7 @@ AIanalyze::AIanalyze(int currentchess[BOARD_SIZE][BOARD_SIZE], int thetype, int 
         }
     }
 
+    //预测落子并记分
     currentboard[cp.row][cp.column] = cputype;
     for(int i = 0; i < BOARD_SIZE; i++)
     {
@@ -58,6 +82,8 @@ AIanalyze::AIanalyze(int currentchess[BOARD_SIZE][BOARD_SIZE], int thetype, int 
             scorecount += chessboardscore[i][j];
         }
     }
+
+    originscore = scorecount;
 }
 
 AIanalyze::~AIanalyze()
@@ -69,20 +95,25 @@ int AIanalyze::getScore()
     return scorecount;
 }
 
-void AIanalyze::addScore(int score)
+void AIanalyze::setScore(int score)
 {
-    scorecount += score;
+    scorecount = score;
 }
 
 ChessPos AIanalyze::analyzeCurrent()
 {
+    //递归函数，当层数大于定义时退出
     if(deep > AIanalyze::level)
     {
         return ChessPos(-1, -1);
     }
 
+    //记录最大数
     int maxcount = LOWEST_NUM;
     ChessPos cp(0, 0);
+
+    //第一步是否已下，防止不返回落点时，只在初始点出现
+    bool firststep = false;
 
     for(int i = 0; i < BOARD_SIZE; i++)
     {
@@ -90,33 +121,39 @@ ChessPos AIanalyze::analyzeCurrent()
         {
             if(currentboard[i][j] == EMPTY_CHESS)
             {               
-
+                //只判断落子后对局势产生影响的点
                 if(!judgeValue(i, j))
                 {
                    continue;
                 }
+                if(!firststep)
+                {
+                    cp.setPos(i, j);
+                    firststep = true;
+                }
 
-                cp.setPos(i, j);
-
+                //当为用户落子时，棋子类型改为反色
                 int temptype = cputype;
                 if(deep % 2 != 0)
                 {
                     temptype = -temptype;
                 }
 
-
+                //子节点，生成预测后棋盘及局势
                 AIanalyze childanalyze(currentboard, temptype, deep + 1, this, ChessPos(i , j));
-
+                //字节点递归调用
                 childanalyze.analyzeCurrent();
 
                 if(deep != 0)
                 {
-                    if(deep % 2 == 0)
+                    if(deep % 2 == 0 && this->getScore() > (-father->getScore()))
                     {
-                        father->addScore(-this->getScore());
+                        //maxcount = this->getScore();
+                        father->setScore(-this->getScore());
                     }
                 }
 
+                //选择最优步
                 if(deep == 0 && childanalyze.getScore() > maxcount)
                 {
                     maxcount = childanalyze.getScore();
@@ -234,7 +271,7 @@ int AIanalyze::judgeOnePos(int row, int column, int direction, int type)
             case 3:
             return 4;
             case 4:
-            return 8;
+            return 64;
             case 5:
             return 128;
         }
@@ -248,7 +285,7 @@ int AIanalyze::judgeOnePos(int row, int column, int direction, int type)
             case 2:
             return 2;
             case 3:
-            return 16;
+            return 96;
             case 4:
             return 128;
             case 5:
@@ -317,4 +354,21 @@ bool AIanalyze::judgeValue(int row, int column)
         }
     }
     return false;
+}
+
+int AIanalyze::judgeState(int type)
+{
+    int count = 0;
+    for(int i = 0; i < BOARD_SIZE; i++)
+    {
+        for(int j = 0; j < BOARD_SIZE; j++)
+        {
+            chessboardscore[i][j] += judgeOnePos(i, j, HORIZON, type);
+            chessboardscore[i][j] += judgeOnePos(i, j, VERTICAL, type);
+            chessboardscore[i][j] += judgeOnePos(i, j, LEFT, type);
+            chessboardscore[i][j] += judgeOnePos(i, j, RIGHT, type);
+            count += chessboardscore[i][j];
+        }
+    }
+    return count;
 }

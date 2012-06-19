@@ -29,5 +29,5 @@ const int LOCAL_MUTI = 2;
 const int NET_MUTI = 3;
 const int NONE_GAME = 4;
 
-const int LOWEST_NUM = -99999999;
+const int LOWEST_NUM = -9999999;
 #endif // CONST_H
