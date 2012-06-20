@@ -21,13 +21,12 @@ private:
     int judgeState(int type);
 private:
     AIanalyze* father;
-    int chessboardscore[BOARD_SIZE][BOARD_SIZE];
+    int chessboardscore[BOARD_SIZE][BOARD_SIZE][4];
     int currentboard[BOARD_SIZE][BOARD_SIZE];
     ChessPos nowchess;
     int scorecount;
     int deep;
     int cputype;
-    int originscore;
 public:
     static int level;
 };

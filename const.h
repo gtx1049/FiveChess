@@ -30,4 +30,8 @@ const int NET_MUTI = 3;
 const int NONE_GAME = 4;
 
 const int LOWEST_NUM = -9999999;
+const int ALIVE_THREE = -1;
+const int HAS_FOUR = -2;
+const int ALIVE_THREE_SELF = -3;
+const int SINGLE_FOUR = -4;
 #endif // CONST_H
