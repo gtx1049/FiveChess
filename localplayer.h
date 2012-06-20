@@ -3,6 +3,10 @@
 
 #include "player.h"
 
+/*
+    本地玩家
+*/
+
 class LocalPlayer : public Player
 {
 public:

@@ -4,6 +4,13 @@ Chess::Chess()
 {
 }
 
+Chess::Chess(const Chess &c)
+{
+    chesstype = c.chesstype;
+    chessX = c.chessX;
+    chessY = c.chessY;
+}
+
 Chess::Chess(int X, int Y, int type)
 {
     chesstype = type;

@@ -3,6 +3,7 @@
 #include "netplayer.h"
 #include "localplayer.h"
 #include "aithread.h"
+#include <iostream>
 
 Board::Board(QWidget *parent) :
     QWidget(parent)
@@ -11,6 +12,7 @@ Board::Board(QWidget *parent) :
     maincb = new ChessBoard();
     maincb->reFresh();
     gamemode = NONE_GAME;
+    start = false;
 }
 
 Board::~Board()
@@ -47,6 +49,12 @@ void Board::setGeometry(const QRect &rect)
 //落子后会对输赢情况进行判断
 void Board::mousePressEvent(QMouseEvent *mpe)
 {
+
+    if(!start)
+    {
+        return;
+    }
+
     int x = mpe->pos().x() - BOARD_OFFSET_X;
     int y = mpe->pos().y() - BOARD_OFFSET_Y;
 
@@ -87,6 +95,7 @@ void Board::mousePressEvent(QMouseEvent *mpe)
             playerAI->start();
             break;
         case LOCAL_MUTI:
+            player->setChesstype(-player->getChesstype());
             break;
         case NET_MUTI:
             break;
@@ -113,6 +122,10 @@ void Board::setGameMode(int target)
         player = new LocalPlayer(BLACK_CHESS);
         playerAI = new AIthread(new AIplayer(WHITE_CHESS), maincb, this);
 
+    }
+    else if(target == LOCAL_MUTI)
+    {
+        player = new LocalPlayer(BLACK_CHESS);
     }
     else if(target == NET_MUTI)
     {
@@ -143,6 +156,46 @@ void Board::releasePlayer()
 void Board::repaintScreen()
 {
     repaint();
+}
+
+void Board::judgeVictoryOfAI(Chess lastchess)
+{
+    if(maincb->judgeVictory(lastchess))
+    {
+        QMessageBox::about(NULL, "xx", "You Lose!");
+    }
+}
+
+//悔棋响应函数
+void Board::backStep()
+{
+    if(gamemode == LOCAL_SINGLE)
+    {
+        if(playerAI->getAIplayer()->getActive())
+        {
+            return;
+        }
+    }
+
+    if(!maincb->backStep())
+    {
+        QMessageBox::about(NULL, "xx", "You can't!");
+    }
+    repaint();
+}
+
+//认输响应函数
+void Board::loseGame()
+{
+    start = false;
+    maincb->reFresh();
+    repaint();
+    //std::cout << "fresh" << endl;
+}
+
+void Board::startGame()
+{
+    start = true;
 }
 
 

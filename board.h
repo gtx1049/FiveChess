@@ -41,11 +41,16 @@ private:
     AIthread* playerAI;
 private:
     int gamemode;
+    bool start;
 
 signals:
     
 public slots:
     void repaintScreen();
+    void judgeVictoryOfAI(Chess);
+    void backStep();
+    void loseGame();
+    void startGame();
 };
 
 #endif // BOARD_H

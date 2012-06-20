@@ -4,6 +4,10 @@
 #include "chessboard.h"
 #include "struct.h"
 
+/*
+    玩家类，包括玩家的基本信息
+*/
+
 class ChessBoard;
 
 class Player

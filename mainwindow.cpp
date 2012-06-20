@@ -8,6 +8,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    connect(ui->backStepButton, SIGNAL(clicked()), ui->playScreen, SLOT(backStep()));
+    connect(ui->failButton, SIGNAL(clicked()), ui->playScreen, SLOT(loseGame()));
+    connect(ui->startButton, SIGNAL(clicked()),ui->playScreen, SLOT(startGame()));
+
     ui->help->hide();
     ui->hostChose->hide();
     ui->playScreen->hide();
@@ -33,8 +38,7 @@ void MainWindow::on_singleButton_clicked()
 {
     ui->menu->hide();
     ui->playScreen->setGameMode(LOCAL_SINGLE);
-    AIanalyze::level = 1;
-    ui->playScreen->setUserfirst(true);
+    ui->playScreen->setUserfirst(false);
     ui->playScreen->show();
 }
 
@@ -84,3 +88,9 @@ void MainWindow::on_netButton_clicked()
     ui->menu->hide();
 }
 
+
+void MainWindow::on_failButton_clicked()
+{
+    ui->playScreen->hide();
+    ui->menu->show();
+}

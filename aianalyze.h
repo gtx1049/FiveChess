@@ -5,6 +5,10 @@
 #include"const.h"
 #include"struct.h"
 
+/*
+    分析当前局势的类型，AI的核心
+*/
+
 class AIanalyze
 {
 public:
@@ -19,6 +23,7 @@ private:
     int judgeOnePos(int row, int column, int direction, int type);
     bool judgeValue(int row, int colum);
     int judgeState(int type);
+    void makeDecision();
 private:
     AIanalyze* father;
     int chessboardscore[BOARD_SIZE][BOARD_SIZE][4];

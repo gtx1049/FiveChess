@@ -3,6 +3,10 @@
 
 #include"player.h"
 
+/*
+    AI玩家类，继承自玩家类
+*/
+
 class Player;
 class ChessPos;
 class ChessBoard;

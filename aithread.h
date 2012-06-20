@@ -5,6 +5,10 @@
 #include "board.h"
 #include "aiplayer.h"
 
+/*
+    通过线程控制AI，可使AI思考事件独立，不阻塞GUI线程
+*/
+
 class Board;
 
 class AIthread : public QThread
@@ -22,6 +26,7 @@ private:
     Board* theboard;
 signals:
     void endThink();
+    void judgeLastChess(Chess);
 public slots:
     
 };

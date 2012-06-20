@@ -13,6 +13,11 @@ ChessBoard::~ChessBoard()
 //刷新整个棋盘
 void ChessBoard::reFresh()
 {
+    if(steps.size() != 0)
+    {
+        steps.clear();
+    }
+
     for(int i = 0; i < BOARD_SIZE; i++)
     {
         for(int j = 0; j < BOARD_SIZE; j++)

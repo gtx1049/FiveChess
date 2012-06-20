@@ -12,7 +12,7 @@ AIthread::AIthread(AIplayer* p, ChessBoard* cb, Board* b)
     maincb = cb;
 
     connect(this, SIGNAL(endThink()), theboard, SLOT(repaintScreen()));
-
+    connect(this, SIGNAL(judgeLastChess(Chess)), theboard, SLOT(judgeVictoryOfAI(Chess)));
 }
 
 AIthread::~AIthread()
@@ -23,8 +23,9 @@ AIthread::~AIthread()
 void AIthread::run()
 {
     theplayer->setActive(true);
-    theplayer->doAct(theplayer->thinkStrategy(maincb), maincb);
+    Chess lastchess = theplayer->doAct(theplayer->thinkStrategy(maincb), maincb);
     emit endThink();
+    emit judgeLastChess(lastchess);
     theplayer->setActive(false);
 }
 

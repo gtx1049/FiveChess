@@ -31,7 +31,6 @@ public:
     void displayBoard(Board* b);
     int getChessBoardMat(int, int);
     bool hasChess(int, int);
-
 private:
     bool fiveInDirection(int, int, int, int);
 };

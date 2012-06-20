@@ -1,6 +1,10 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
+/*
+    记录棋子位置的结构体
+*/
+
 class ChessPos
 {
 public:

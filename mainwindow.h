@@ -36,6 +36,8 @@ private slots:
 
     void on_netButton_clicked();
 
+    void on_failButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

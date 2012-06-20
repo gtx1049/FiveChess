@@ -16,6 +16,7 @@ AIanalyze::AIanalyze(ChessBoard *mat, int thetype, int thedeep)
     deep = thedeep;
     scorecount = 0;
 
+    //对于记分盘的初始化
     for(int i = 0; i < BOARD_SIZE; i++)
     {
         for(int j = 0; j < BOARD_SIZE; j++)
@@ -27,8 +28,13 @@ AIanalyze::AIanalyze(ChessBoard *mat, int thetype, int thedeep)
             chessboardscore[i][j][RIGHT] = 0;
         }
     }
+    makeDecision();
 
-    //选择进攻还是防守
+}
+
+void AIanalyze::makeDecision()
+{
+    //选择进攻还是防守,当自己存在4，必须进攻
     scorecount = judgeState(cputype);
     if(scorecount == HAS_FOUR)
     {
@@ -37,38 +43,46 @@ AIanalyze::AIanalyze(ChessBoard *mat, int thetype, int thedeep)
     }
 
     int usercount = judgeState(-cputype);
-    if(usercount == ALIVE_THREE)
-    {
-        AIanalyze::level = 2;
-        return;
-    }
-
+    //当对手存在4，必须防守
     if(usercount == SINGLE_FOUR)
     {
         AIanalyze::level = 2;
         return;
     }
 
+    //对手不存在4，自己有活三，则进攻
     if(scorecount == ALIVE_THREE_SELF)
     {
         AIanalyze::level = 1;
         return;
     }
 
-    if(scorecount == 0)
+    //当对手存在3，必须防守
+    if(usercount == ALIVE_THREE)
     {
-        AIanalyze::level = 1;
+        AIanalyze::level = 2;
+        //cout << "defend alive 3" << endl;
         return;
     }
 
-    if(usercount <= scorecount)
-    {
-        AIanalyze::level = 1;
-    }
-    else
+    //当对手有三活一,必须防守
+    if(usercount == THREE_ONE_ALIVE)
     {
         AIanalyze::level = 2;
+        cout << "defend alive 3" << endl;
+        return;
     }
+
+    //以上条件都不满足时，选择进攻
+    AIanalyze::level = 1;
+//    if(usercount <= scorecount)
+//    {
+//        AIanalyze::level = 1;
+//    }
+//    else
+//    {
+//        AIanalyze::level = 2;
+//    }
 }
 
 AIanalyze::AIanalyze(int currentchess[BOARD_SIZE][BOARD_SIZE], int thetype, int thedeep, AIanalyze* thefather, ChessPos cp)
@@ -103,6 +117,7 @@ AIanalyze::AIanalyze(int currentchess[BOARD_SIZE][BOARD_SIZE], int thetype, int 
     int i = cp.row;
     int j = cp.column;
 
+    //只计算落子位置的分数
     chessboardscore[i][j][HORIZON] = judgeOnePos(i, j, HORIZON, cputype);
     chessboardscore[i][j][VERTICAL] = judgeOnePos(i, j, VERTICAL, cputype);
     chessboardscore[i][j][LEFT] = judgeOnePos(i, j, LEFT, cputype);
@@ -280,6 +295,22 @@ int AIanalyze::judgeOnePos(int row, int column, int direction, int type)
                     downdead = true;
                 }
             }
+            //判断是否存在三加一
+            else if(currentboard[nowrow][nowcolumn] == EMPTY_CHESS && deep == 0)
+            {
+
+                int blankX = nowrow + offsetX;
+                int blankY = nowcolumn + offsetY;
+                if(blankX < BOARD_SIZE && blankX >= 0 && blankY < BOARD_SIZE && blankY >= 0)
+                {
+                    if(chesscount == 3 && currentboard[blankX][blankY] == type)
+                    {
+                        return 5;
+                    }
+                }
+
+            }
+
             if(!upflag)
             {
                 break;
@@ -325,10 +356,26 @@ int AIanalyze::judgeOnePos(int row, int column, int direction, int type)
             return 512;
         }
     }
+    else if(updead && downdead)
+    {
+        switch(chesscount)
+        {
+            case 1:
+            return 0;
+            case 2:
+            return 1;
+            case 3:
+            return 2;
+            case 4:
+            return 32;
+            case 5:
+            return 512;
+        }
+    }
     return 0;
 }
 
-//评估某一点是否值得落子
+//评估某一点是否值得落子，大大提高了计算速度
 bool AIanalyze::judgeValue(int row, int column)
 {
     if(row + 1 != BOARD_SIZE)
@@ -413,27 +460,65 @@ int AIanalyze::judgeState(int type)
             }
 
             //当对手存在活三，必须进行防守
-            if(max >= 96 && type == -cputype)
+            if(type == -cputype)
             {
-                return ALIVE_THREE;
+                for(int q = 0; q < 4; q++)
+                {
+                    if(chessboardscore[i][j][q] == 96)
+                    {
+                        return ALIVE_THREE;
+                    }
+                }
             }
 
-            if(max == 64 && type == -cputype)
+            if(type == -cputype)
             {
-                return SINGLE_FOUR;
+                for(int q = 0; q < 4; q++)
+                {
+                    if(chessboardscore[i][j][q] == 64)
+                    {
+                        return SINGLE_FOUR;
+                    }
+                }
+            }
+
+            //存在三活一，防守
+            if(type == -cputype)
+            {
+                for(int q = 0; q < 4; q++)
+                {
+                    if(chessboardscore[i][j][q] == 5)
+                    {
+                        return THREE_ONE_ALIVE;
+                    }
+                }
             }
 
             //如果我方存在冲四活四，必然进行进攻
-            if((max == 64 || max == 255) && type == cputype)
+            if(type == cputype)
             {
-                return HAS_FOUR;
+                for(int q = 0; q < 4; q++)
+                {
+                    if(chessboardscore[i][j][q] == 64 || chessboardscore[i][j][q] == 255)
+                    {
+                        return HAS_FOUR;
+                    }
+                }
             }
 
-            //如果我方存在活三，对手没有或三时，则进行进攻
-            if(max == 96 && type == cputype)
+
+            //如果我方存在活三，对手没有活三时，则进行进攻
+            if(type == cputype)
             {
-                return ALIVE_THREE_SELF;
+                for(int q = 0; q < 4; q++)
+                {
+                    if(chessboardscore[i][j][q] == 96)
+                    {
+                        return ALIVE_THREE_SELF;
+                    }
+                }
             }
+
 
             count += max;
         }
