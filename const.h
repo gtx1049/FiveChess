@@ -35,4 +35,6 @@ const int HAS_FOUR = -2;
 const int ALIVE_THREE_SELF = -3;
 const int SINGLE_FOUR = -4;
 const int THREE_ONE_ALIVE = -5;
+const int TWO_ONE_ALIVE = -6;
+const int TWO_TWO_ALIVE = -7;
 #endif // CONST_H

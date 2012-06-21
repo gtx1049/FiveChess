@@ -50,10 +50,24 @@ void AIanalyze::makeDecision()
         return;
     }
 
+    //当存在二活二，必须防守
+    if(usercount == TWO_TWO_ALIVE)
+    {
+        AIanalyze::level = 2;
+        return;
+    }
+
     //对手不存在4，自己有活三，则进攻
     if(scorecount == ALIVE_THREE_SELF)
     {
         AIanalyze::level = 1;
+        return;
+    }
+
+    //当存在活二加一，必须防守
+    if(usercount == TWO_ONE_ALIVE)
+    {
+        AIanalyze::level = 2;
         return;
     }
 
@@ -295,17 +309,51 @@ int AIanalyze::judgeOnePos(int row, int column, int direction, int type)
                     downdead = true;
                 }
             }
+
+
             //判断是否存在三加一
             else if(currentboard[nowrow][nowcolumn] == EMPTY_CHESS && deep == 0)
             {
-
                 int blankX = nowrow + offsetX;
                 int blankY = nowcolumn + offsetY;
                 if(blankX < BOARD_SIZE && blankX >= 0 && blankY < BOARD_SIZE && blankY >= 0)
                 {
-                    if(chesscount == 3 && currentboard[blankX][blankY] == type)
+                    if(chesscount == 3 && currentboard[blankX][blankY] == -cputype)
                     {
                         return 5;
+                    }
+
+                    //判断二活二
+                    if(chesscount == 2 && currentboard[blankX][blankY] == -cputype)
+                    {
+                        int u2to2X = blankX + offsetX;
+                        int u2to2Y = blankY + offsetY;
+                        if(u2to2X < BOARD_SIZE && u2to2X >= 0 && u2to2Y < BOARD_SIZE && u2to2Y >= 0)
+                        {
+                            if(currentboard[u2to2X][u2to2Y] == -cputype)
+                            {
+                                return 9;
+                            }
+                        }
+                    }
+
+                    //判断是否存在二加一
+                    if(chesscount == 2 && currentboard[blankX][blankY] == -cputype)
+                    {
+                        int u2to1X = blankX + offsetX;
+                        int u2to1Y = blankY + offsetY;
+                        if(u2to1X < BOARD_SIZE && u2to1X >= 0 && u2to1Y < BOARD_SIZE && u2to1Y >= 0)
+                        {
+                            int u1to2X = nowrow - 3 * offsetX;
+                            int u1to2Y = nowcolumn - 3 * offsetY;
+                            if(u1to2X < BOARD_SIZE && u1to2X >= 0 && u1to2Y < BOARD_SIZE && u1to2Y >= 0)
+                            {
+                                if(currentboard[u2to1X][u2to1Y] == EMPTY_CHESS && currentboard[u1to2X][u1to2Y] == EMPTY_CHESS)
+                                {
+                                    return 7;
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -490,6 +538,30 @@ int AIanalyze::judgeState(int type)
                     if(chessboardscore[i][j][q] == 5)
                     {
                         return THREE_ONE_ALIVE;
+                    }
+                }
+            }
+
+            //二活一
+            if(type == -cputype)
+            {
+                for(int q = 0; q < 4; q++)
+                {
+                    if(chessboardscore[i][j][q] == 7)
+                    {
+                        return TWO_ONE_ALIVE;
+                    }
+                }
+            }
+
+            //二活二
+            if(type == -cputype)
+            {
+                for(int q = 0; q < 4; q++)
+                {
+                    if(chessboardscore[i][j][q] == 9)
+                    {
+                        return TWO_TWO_ALIVE;
                     }
                 }
             }
