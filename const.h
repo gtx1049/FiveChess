@@ -1,6 +1,6 @@
 #ifndef CONST_H
 #define CONST_H
-
+#include <QtNetwork>
 /*
   所有的常数在此定义
 */
@@ -37,4 +37,14 @@ const int SINGLE_FOUR = -4;
 const int THREE_ONE_ALIVE = -5;
 const int TWO_ONE_ALIVE = -6;
 const int TWO_TWO_ALIVE = -7;
+
+const int NETNUMBER = 6666;
+const int HOSTNUMBER = 5555;
+
+const quint16 CONNECT = 1;
+const quint16 JOIN = 2;
+const quint16 DOWN = 3;
+const quint16 UNDO = 4;
+const quint16 LIST = 5;
+const QString NETIP = "localhost";
 #endif // CONST_H

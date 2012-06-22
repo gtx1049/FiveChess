@@ -7,6 +7,7 @@
 #include "const.h"
 #include "player.h"
 #include "aithread.h"
+#include "tcpsender.h"
 
 /*
     由QWiget继承下来点棋盘，负责接受棋盘事件
@@ -34,11 +35,18 @@ public:
     void setGameMode(int);
     void setUserfirst(bool);
     void releasePlayer();
+
+    void acceptTcp(QTcpSocket *tcpSocket);
+
+    Player* getNetPlayer();
+    ChessBoard* getChessBoard();
 private:
     ChessBoard* maincb;
     QWidget* parentwidget;
     Player* player;
     AIthread* playerAI;
+    TcpSender *tcpSender;
+    Player* guest;
 private:
     int gamemode;
     bool start;

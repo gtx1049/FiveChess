@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += network
 
 TARGET = FiveChess
 TEMPLATE = app
@@ -20,7 +21,11 @@ SOURCES += main.cpp\
     netplayer.cpp \
     aiplayer.cpp \
     aianalyze.cpp \
-    aithread.cpp
+    aithread.cpp \
+    client.cpp \
+    server.cpp \
+    tcpreciever.cpp \
+    tcpsender.cpp
 
 HEADERS  += mainwindow.h \
     chessboard.h \
@@ -33,7 +38,12 @@ HEADERS  += mainwindow.h \
     aiplayer.h \
     struct.h \
     aianalyze.h \
-    aithread.h
+    aithread.h \
+    client.h \
+    message.h \
+    server.h \
+    tcpreciever.h \
+    tcpsender.h
 
 FORMS    += mainwindow.ui
 

@@ -304,6 +304,19 @@ background-image:url(:/fiveChess/png/img/backButton_h.png);
        <string/>
       </property>
      </widget>
+     <widget class="QListWidget" name="rivalName">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>551</width>
+        <height>321</height>
+       </rect>
+      </property>
+     </widget>
+     <zorder>rivalName</zorder>
+     <zorder>inviteButton</zorder>
+     <zorder>backButton2</zorder>
     </widget>
     <widget class="QWidget" name="invitation" native="true">
      <property name="geometry">
@@ -489,6 +502,11 @@ background-image:url(:/fiveChess/png/img/failButton_h.png);
       <string/>
      </property>
     </widget>
+    <zorder>startButton</zorder>
+    <zorder>backStepButton</zorder>
+    <zorder>drawButton</zorder>
+    <zorder>failButton</zorder>
+    <zorder>hostChose</zorder>
    </widget>
    <widget class="QWidget" name="help" native="true">
     <property name="geometry">
@@ -526,8 +544,8 @@ background-image:url(:/fiveChess/png/img/backButton_h.png);
      </property>
     </widget>
    </widget>
-   <zorder>help</zorder>
    <zorder>hostChose</zorder>
+   <zorder>help</zorder>
    <zorder>menu</zorder>
    <zorder>playScreen</zorder>
   </widget>

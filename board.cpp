@@ -3,6 +3,7 @@
 #include "netplayer.h"
 #include "localplayer.h"
 #include "aithread.h"
+#include "message.h"
 #include <iostream>
 
 Board::Board(QWidget *parent) :
@@ -50,7 +51,7 @@ void Board::setGeometry(const QRect &rect)
 void Board::mousePressEvent(QMouseEvent *mpe)
 {
 
-    if(!start)
+    if(!start && gamemode != NET_MUTI)
     {
         return;
     }
@@ -84,7 +85,11 @@ void Board::mousePressEvent(QMouseEvent *mpe)
         }
     }
     //最后一次落子
-    Chess lastchess = player->doAct(ChessPos(row, column), maincb);
+    Chess lastchess;
+    if(gamemode != NET_MUTI)
+    {
+        lastchess = player->doAct(ChessPos(row, column), maincb);
+    }
 
     repaint();
 
@@ -98,6 +103,22 @@ void Board::mousePressEvent(QMouseEvent *mpe)
             player->setChesstype(-player->getChesstype());
             break;
         case NET_MUTI:
+
+            if(player->getActive() && !maincb->hasChess(row,column))
+            {
+                lastchess = player->doAct(ChessPos(row, column), maincb);
+                repaint();
+                Message message;
+                message.status = DOWN;
+                message.point.x = row;
+                message.point.y = column;
+                tcpSender->sendStep(message);
+                player->setActive(false);
+            }
+            else
+            {
+                return;
+            }
             break;
     }
 
@@ -129,7 +150,8 @@ void Board::setGameMode(int target)
     }
     else if(target == NET_MUTI)
     {
-        player = new NetPlayer(WHITE_CHESS);
+        player = new NetPlayer(BLACK_CHESS);
+        player->setActive(true);
     }
 }
 
@@ -151,6 +173,21 @@ void Board::releasePlayer()
     {
         delete playerAI;
     }
+}
+
+Player *Board::getNetPlayer()
+{
+    return player;
+}
+
+ChessBoard *Board::getChessBoard()
+{
+    return maincb;
+}
+
+void Board::acceptTcp(QTcpSocket *tcpSocket)
+{
+    tcpSender = new TcpSender(tcpSocket);
 }
 
 void Board::repaintScreen()
